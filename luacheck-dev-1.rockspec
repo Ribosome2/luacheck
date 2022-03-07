@@ -56,6 +56,7 @@ build = {
       ["luacheck.stages.detect_unreachable_code"] = "src/luacheck/stages/detect_unreachable_code.lua",
       ["luacheck.stages.detect_unused_fields"] = "src/luacheck/stages/detect_unused_fields.lua",
       ["luacheck.stages.detect_unused_locals"] = "src/luacheck/stages/detect_unused_locals.lua",
+      ["luacheck.stages.detect_unmatched_listeners"] = "src/luacheck/stages/detect_unmatched_listeners.lua",
       ["luacheck.stages.linearize"] = "src/luacheck/stages/linearize.lua",
       ["luacheck.stages.name_functions"] = "src/luacheck/stages/name_functions.lua",
       ["luacheck.stages.parse"] = "src/luacheck/stages/parse.lua",
