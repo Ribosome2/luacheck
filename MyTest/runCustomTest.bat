@@ -1,0 +1,1 @@
+lua51.exe customCheckEntry.lua test.lua
