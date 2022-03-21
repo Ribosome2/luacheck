@@ -26,7 +26,7 @@ stages.names = {
    "detect_unreachable_code",
    "detect_unused_fields",
    "detect_unused_locals",
-   "detect_unmatched_listeners"
+   "detect_arguments_count"
 }
 
 stages.modules = {}
