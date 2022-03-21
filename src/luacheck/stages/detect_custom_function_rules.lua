@@ -4,11 +4,20 @@ local stage = {}
 
 stage.warnings = {
     ["800"] = {message_format = "function {name} has too many arguments ", fields = {'name'}},
-    ["801"] = {message_format = "function {name} too big: takes {lineCount} lines ", fields = {'name',"lineCount"}},
+    ["801"] = {message_format = "function {name} is too big: takes {lineCount} lines ", fields = {'name',"lineCount"}},
 }
 local _chstate
 local max_function_argument_count = 4
-local max_function_line_count = 4
+local max_function_line_count = 80
+
+--allow to override this in config
+if CUSTOM_MAX_ARGUMENT_COUNT then
+    max_function_argument_count = CUSTOM_MAX_ARGUMENT_COUNT
+end
+
+if CUSTOM_MAX_FUNCTION_LINE_COUNT then
+    max_function_line_count = CUSTOM_MAX_FUNCTION_LINE_COUNT
+end
 
 local function  check_single_function(node)
     local args = node[1]
@@ -24,8 +33,6 @@ local function  check_single_function(node)
             })
         end
     end
-    --print("node ",node.line,node.end_line)
-    --print("args count ",#args)
 end
 
 

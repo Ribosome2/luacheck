@@ -6,4 +6,6 @@ appendSearchPath(';C:/luarocks-3.8.0-win32/src/luarocks/?.lua')
 appendSearchPath(';../src/?/init.lua')
 appendSearchPath(';../src/?.lua')
 require("VarDumpUtil")
+CUSTOM_MAX_ARGUMENT_COUNT=4
+CUSTOM_MAX_FUNCTION_LINE_COUNT=2
 require("luacheck.main")

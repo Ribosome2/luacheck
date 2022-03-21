@@ -1,1 +1,1 @@
-lua51.exe customCheckEntry.lua test.lua
+lua51.exe customCheckEntry.lua test.lua --quiet --allow-defined
