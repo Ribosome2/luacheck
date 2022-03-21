@@ -1,15 +1,14 @@
 
-function testFunction(a,b,c,d,f)
+function testFunction(a,b,c,d,e)
+    local c = a+b
+
+
+
+
     return
 end
 
-function testFunction2(a,b)
-    return
-end
 
-function testFunction3(a,b,r,f,g)
-    return
-end
 
 
 

@@ -320,6 +320,7 @@ local function new_inner_node(start_range, end_range, tag, node)
    node.line = start_range.line
    node.offset = start_range.offset
    node.end_offset = end_range.end_offset
+   node.end_line = end_range.line
    node.tag = tag
    return node
 end
@@ -438,8 +439,11 @@ local function parse_function(state, function_range)
    end
 
    check_and_skip_closing_token(state, paren_range, "(")
+    print("function rage--------: ",GetVarDump(paren_range))
+
    local body = parse_block(state, function_range, "function")
    local end_range = copy_range(state)
+    print("function rage--------end_range : ",GetVarDump(end_range))
    -- Skip "function".
    skip_token(state)
    return new_inner_node(function_range, end_range, "Function", {args, body, end_range = end_range})
