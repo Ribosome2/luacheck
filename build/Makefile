@@ -1,7 +1,7 @@
 # Makefile for (cross)compiling luacheck binaries.
 # Do not use directly, run scripts/build-binaries.sh instead.
 
-LUA_VERSION= 5.3.5
+LUA_VERSION= 5.1.4
 LFS_VERSION= 1.7.0-2
 ARGPARSE_VERSION= 0.6.0-1
 LANES_VERSION= 3.10.1-1
