@@ -7,5 +7,5 @@ appendSearchPath(';../src/?/init.lua')
 appendSearchPath(';../src/?.lua')
 require("VarDumpUtil")
 CUSTOM_MAX_ARGUMENT_COUNT=4
-CUSTOM_MAX_FUNCTION_LINE_COUNT=2
+CUSTOM_MAX_FUNCTION_LINE_COUNT=80
 require("luacheck.main")

@@ -26,7 +26,8 @@ stages.names = {
    "detect_unreachable_code",
    "detect_unused_fields",
    "detect_unused_locals",
-   "detect_custom_function_rules"
+   "detect_custom_function_rules",
+   "detect_service_interface_functions_lack_comments"
 }
 
 stages.modules = {}

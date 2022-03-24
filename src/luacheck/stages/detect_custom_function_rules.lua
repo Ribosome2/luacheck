@@ -1,4 +1,3 @@
-local core_utils = require "luacheck.core_utils"
 
 local stage = {}
 
@@ -19,7 +18,6 @@ if CUSTOM_MAX_FUNCTION_LINE_COUNT then
 end
 
 local function  check_single_function(node,chstate)
-
     local args = node[1]
     if #args> max_function_argument_count then
         chstate:warn_range("800",node,{name=node.name})
