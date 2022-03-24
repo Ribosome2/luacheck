@@ -33,7 +33,7 @@ end
 
 --对于对外界公开的函数Service接口函数，没有注释的情况进行警告
 function stage.run(chstate)
-    print("检测命名规范")
+    print("检测命名规范",CUR_CHECK_FILE_PATH)
     handle_nodes(chstate.ast,chstate)
 end
 return stage

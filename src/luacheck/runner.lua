@@ -208,9 +208,8 @@ function Runner:_add_new_reports(inputs)
             table.insert(original_indexes, index)
          else
             local source, err = utils.read_file(input.path or input.file)
-
             if source then
-               table.insert(sources, source)
+               table.insert(sources, {source_str =source,file_path=input.path})
                table.insert(original_indexes, index)
             else
                input.fatal = "I/O"
@@ -219,9 +218,9 @@ function Runner:_add_new_reports(inputs)
          end
       end
    end
-
+    print("multithreading.has_lanes ",multithreading.has_lanes)
    local map = multithreading.has_lanes and multithreading.pmap or utils.map
-   local reports = map(luacheck.get_report, sources, self._top_opts.jobs)
+   local reports = map(luacheck.get_report_by_source_data, sources, self._top_opts.jobs)
 
    for index, report in ipairs(reports) do
       inputs[original_indexes[index]].new_report = report

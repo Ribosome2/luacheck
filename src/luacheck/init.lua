@@ -36,6 +36,20 @@ local function validate_options(fname, items, opts, stds)
    end
 end
 
+--支持source数据是一个table的情况，因为我们有需要根据文件名做逻辑的需求
+--不能只用字符串
+function luacheck.get_report_by_source_data(source_data)
+    CUR_CHECK_FILE_PATH=nil
+    --不想修改太多之前的逻辑，不考虑多线程，每次生成报告前记录下当前检测的文件名
+    if type(source_data)=="table" then
+        CUR_CHECK_FILE_PATH=source_data.file_path
+        return luacheck.get_report(source_data.source_str)
+    else
+        return luacheck.get_report(source_data)
+    end
+end
+
+
 -- Returns report for a string.
 function luacheck.get_report(src)
    local msg = ("bad argument #1 to 'luacheck.get_report' (string expected, got %s)"):format(type(src))
