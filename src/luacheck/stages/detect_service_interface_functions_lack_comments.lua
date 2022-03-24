@@ -7,6 +7,13 @@ stage.warnings = {
 }
 
 
+local function check_ignore_service_function(func_name)
+    if CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES then
+        return CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES[func_name]
+    end
+    return false
+end
+
 local function find_prev_comment_line(start_line,chstate)
     local result =-1
     --只认紧跟函数名的上一行的注释
@@ -15,12 +22,16 @@ local function find_prev_comment_line(start_line,chstate)
         if comment_item.line==target_comment_line then
             --如果有必要，可以加是否是什么都没写的空注释
             result =comment_item.line
+            break
         end
     end
     return result
 end
 
 local function  check_single_function(node,chstate)
+    if check_ignore_service_function(node.name) then
+        return
+    end
     local func_begin_line = node.line
     if find_prev_comment_line(func_begin_line,chstate)<=0 then
         chstate:warn_range("811",node,{name=node.name})

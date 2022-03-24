@@ -1,7 +1,8 @@
 print("this is test File 2")
 
 --some comment--[[]]
-function testFunction()
+
+function OnLogin()
 
 end
 

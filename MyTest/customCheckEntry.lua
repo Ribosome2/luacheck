@@ -8,4 +8,8 @@ appendSearchPath(';../src/?.lua')
 require("VarDumpUtil")
 CUSTOM_MAX_ARGUMENT_COUNT=4
 CUSTOM_MAX_FUNCTION_LINE_COUNT=80
+
+CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES={
+    ["OnLogin"]=true,
+}
 require("luacheck.main")
