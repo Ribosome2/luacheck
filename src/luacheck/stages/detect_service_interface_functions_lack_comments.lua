@@ -59,6 +59,11 @@ local function ends_with(str, ending)
     return ending == "" or str:sub(-#ending) == ending
 end
 
+local function get_module_name(source_str)
+    for module_name in source_str:gmatch "AQ.(%w+)" do
+        print("found ",module_name)
+    end
+end
 
 --对于对外界公开的函数Service接口函数，没有注释的情况进行警告
 function stage.run(chstate)
@@ -67,6 +72,8 @@ function stage.run(chstate)
         if ends_with(curFileName,"Service.lua") then
             print("checking service file: ",curFileName)
             handle_nodes(chstate.ast,chstate)
+        else ends_with(curFileName,"Mgr.lua")
+            local moduleName = get_module_name(chstate.source._bytes)
         end
     end
 
