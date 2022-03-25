@@ -6,10 +6,16 @@ stage.warnings = {
     ["812"] = {message_format = "Service 的Mgr 公开函数 {name} 必须要有注释", fields = {'name',"lineCount"}},
 }
 
+if CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES then
+    for k , v in pairs(CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES) do
+        print("ignore service func ",k,v)
+    end
+end
+
 
 local function check_ignore_service_function(func_name)
     if CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES then
-        return CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES[func_name]
+        return CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES[func_name]==true
     end
     return false
 end
@@ -29,15 +35,16 @@ local function find_prev_comment_line(start_line,chstate)
 end
 
 local function  check_single_function(node,chstate,isMgr)
-    if check_ignore_service_function(node.name) then
+    local cleanFunctionName = node.name:match("[^.:]+$")
+    if check_ignore_service_function(cleanFunctionName) then
         return
     end
     local func_begin_line = node.line
     if find_prev_comment_line(func_begin_line,chstate)<=0 then
         if isMgr then
-            chstate:warn_range("812",node,{name=node.name})
+            chstate:warn_range("812",node,{name=cleanFunctionName})
         else
-            chstate:warn_range("811",node,{name=node.name})
+            chstate:warn_range("811",node,{name=cleanFunctionName})
         end
     end
 end
@@ -80,9 +87,9 @@ function stage.run(chstate)
             handle_nodes(chstate.ast,chstate)
         elseif  ends_with(curFilePath,SERVICE_MGR_SUFFIX) then
             local moduleName = get_module_name(chstate.source._bytes)
-            local name_without_extension = curFilePath:match('[^\\]+$')
+            local name_with_extension = curFilePath:match('[^\\]+$')
             local serviceMgrName = moduleName..SERVICE_MGR_SUFFIX
-            if  name_without_extension==serviceMgrName then
+            if  name_with_extension ==serviceMgrName then
                 --print("found service Mgr ",moduleName,name_without_extension)
                 handle_nodes(chstate.ast,chstate,true)
             end

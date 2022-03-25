@@ -2,7 +2,7 @@ print("this is test File 2")
 module("AQ.Some",package.seeall)
 --some comment--[[]]
 
-function OnLogin()
+function SomeService.OnLogin()
 
 end
 
