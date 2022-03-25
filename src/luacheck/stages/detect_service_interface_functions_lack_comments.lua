@@ -71,11 +71,13 @@ function stage.run(chstate)
             handle_nodes(chstate.ast,chstate)
         elseif  ends_with(curFilePath,SERVICE_MGR_SUFFIX) then
             local moduleName = get_module_name(chstate.source._bytes)
-            local name_with_extension = curFilePath:match('[^\\]+$')
-            local serviceMgrName = moduleName..SERVICE_MGR_SUFFIX
-            if  name_with_extension ==serviceMgrName then
-                --print("found service Mgr ",moduleName,name_without_extension)
-                handle_nodes(chstate.ast,chstate,true)
+            if moduleName ~=nil then
+                local name_with_extension = curFilePath:match('[^\\]+$')
+                local serviceMgrName = moduleName..SERVICE_MGR_SUFFIX
+                if  name_with_extension ==serviceMgrName then
+                    --print("found service Mgr ",moduleName,name_without_extension)
+                    handle_nodes(chstate.ast,chstate,true)
+                end
             end
         end
     end

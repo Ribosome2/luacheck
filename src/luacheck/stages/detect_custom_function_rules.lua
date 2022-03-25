@@ -8,14 +8,6 @@ stage.warnings = {
 local max_function_argument_count = 4
 local max_function_line_count = 80
 
---allow to override this in config
-if CUSTOM_MAX_ARGUMENT_COUNT then
-    max_function_argument_count = CUSTOM_MAX_ARGUMENT_COUNT
-end
-
-if CUSTOM_MAX_FUNCTION_LINE_COUNT then
-    max_function_line_count = CUSTOM_MAX_FUNCTION_LINE_COUNT
-end
 
 local function  check_single_function(node,chstate)
     local args = node[1]
