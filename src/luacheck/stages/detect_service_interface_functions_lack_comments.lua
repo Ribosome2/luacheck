@@ -5,7 +5,7 @@ stage.warnings = {
     ["811"] = {message_format = "Service 公开函数 {name} 必须要有注释 ", fields = {'name'}},
     ["812"] = {message_format = "Service 的Mgr 公开函数 {name} 必须要有注释", fields = {'name',"lineCount"}},
 }
-
+print("ignore config ",CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES)
 if CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES then
     for k , v in pairs(CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES) do
         print("ignore service func ",k,v)
