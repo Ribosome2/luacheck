@@ -218,7 +218,6 @@ function Runner:_add_new_reports(inputs)
          end
       end
    end
-    print("multithreading.has_lanes ",multithreading.has_lanes)
    local map = multithreading.has_lanes and multithreading.pmap or utils.map
    local reports = map(luacheck.get_report_by_source_data, sources, self._top_opts.jobs)
 

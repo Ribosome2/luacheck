@@ -12,9 +12,5 @@ CUSTOM_MAX_FUNCTION_LINE_COUNT=80
 CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES={
     ["OnLogin"]=true,
 }
-for math1, match2,match3 in ("foo/bar/rrr, bar=foo"):gmatch "(%w+)/(%w+)/(%w+)" do
-    print("math1: " .. math1 .. ", match2: " .. match2,"match3",match3)
-end
-
 require("luacheck.main")
 

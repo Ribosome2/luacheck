@@ -28,18 +28,22 @@ local function find_prev_comment_line(start_line,chstate)
     return result
 end
 
-local function  check_single_function(node,chstate)
+local function  check_single_function(node,chstate,isMgr)
     if check_ignore_service_function(node.name) then
         return
     end
     local func_begin_line = node.line
     if find_prev_comment_line(func_begin_line,chstate)<=0 then
-        chstate:warn_range("811",node,{name=node.name})
+        if isMgr then
+            chstate:warn_range("812",node,{name=node.name})
+        else
+            chstate:warn_range("811",node,{name=node.name})
+        end
     end
 end
 
 
-local function handle_nodes(nodes, chstate)
+local function handle_nodes(nodes, chstate,isMgr)
     local num_nodes = #nodes
 
     for index = 1, num_nodes do
@@ -47,10 +51,10 @@ local function handle_nodes(nodes, chstate)
         if type(node) == "table" then
             local tag = node.tag
             if tag=="Function" then
-                check_single_function(node,chstate)
+                check_single_function(node,chstate,isMgr)
             elseif tag == "Set" then
-                handle_nodes(node[1],chstate)
-                handle_nodes(node[2], chstate)
+                handle_nodes(node[1],chstate,isMgr)
+                handle_nodes(node[2], chstate,isMgr)
             end
         end
     end
@@ -61,19 +65,27 @@ end
 
 local function get_module_name(source_str)
     for module_name in source_str:gmatch "AQ.(%w+)" do
-        print("found ",module_name)
+        return module_name
     end
+    return nil
 end
 
+
+local SERVICE_MGR_SUFFIX="Mgr.lua"
 --对于对外界公开的函数Service接口函数，没有注释的情况进行警告
 function stage.run(chstate)
-    local curFileName = CUR_CHECK_FILE_PATH
-    if curFileName ~=nil then
-        if ends_with(curFileName,"Service.lua") then
-            print("checking service file: ",curFileName)
+    local curFilePath = CUR_CHECK_FILE_PATH
+    if curFilePath ~=nil then
+        if ends_with(curFilePath,"Service.lua") then
             handle_nodes(chstate.ast,chstate)
-        else ends_with(curFileName,"Mgr.lua")
+        elseif  ends_with(curFilePath,SERVICE_MGR_SUFFIX) then
             local moduleName = get_module_name(chstate.source._bytes)
+            local name_without_extension = curFilePath:match('[^\\]+$')
+            local serviceMgrName = moduleName..SERVICE_MGR_SUFFIX
+            if  name_without_extension==serviceMgrName then
+                --print("found service Mgr ",moduleName,name_without_extension)
+                handle_nodes(chstate.ast,chstate,true)
+            end
         end
     end
 
