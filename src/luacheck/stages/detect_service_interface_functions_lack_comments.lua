@@ -1,24 +1,11 @@
 
 local stage = {}
 
+--要忽略某些函数名的警告，只需要在 .luacheckrc 的 ignore 里面加入 code/要忽略的参数值就行了
 stage.warnings = {
     ["811"] = {message_format = "Service 公开函数 {name} 必须要有注释 ", fields = {'name'}},
-    ["812"] = {message_format = "Service 的Mgr 公开函数 {name} 必须要有注释", fields = {'name',"lineCount"}},
+    ["812"] = {message_format = "Service 的Mgr 公开函数 {name} 必须要有注释", fields = {'name'}},
 }
-print("ignore config ",CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES)
-if CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES then
-    for k , v in pairs(CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES) do
-        print("ignore service func ",k,v)
-    end
-end
-
-
-local function check_ignore_service_function(func_name)
-    if CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES then
-        return CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES[func_name]==true
-    end
-    return false
-end
 
 local function find_prev_comment_line(start_line,chstate)
     local result =-1
@@ -36,9 +23,6 @@ end
 
 local function  check_single_function(node,chstate,isMgr)
     local cleanFunctionName = node.name:match("[^.:]+$")
-    if check_ignore_service_function(cleanFunctionName) then
-        return
-    end
     local func_begin_line = node.line
     if find_prev_comment_line(func_begin_line,chstate)<=0 then
         if isMgr then

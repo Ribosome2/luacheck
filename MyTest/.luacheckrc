@@ -1,12 +1,9 @@
-print("check config file got read ",debug.traceback())
 CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES={
     ["OnLogin"]=true,
 }
 
-std = {
-    read_globals = {
-        CUSTOM_SERVICE_IGNORE_FUNCTION_NAMES={
-            ["OnLogin"]=true,
-        }
-    } -- these globals can only be accessed.
+ignore = {
+    --Service 公开函数 {name} 必须要有注释
+    "811/OnLogin",
+    "812/OnLogin",
 }

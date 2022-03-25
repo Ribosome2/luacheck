@@ -9,7 +9,7 @@ require("VarDumpUtil")
 --CUSTOM_MAX_ARGUMENT_COUNT=4
 --CUSTOM_MAX_FUNCTION_LINE_COUNT=80
 
---require("luacheck.main")
+require("luacheck.main")
 
 function TestFunctionEnvironment()
     --[[
@@ -23,4 +23,4 @@ function TestFunctionEnvironment()
     setfenv(1,new_function_environment)
     print(1)
 end
-TestFunctionEnvironment()
+--TestFunctionEnvironment()
