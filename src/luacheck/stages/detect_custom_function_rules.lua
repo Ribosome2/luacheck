@@ -2,8 +2,8 @@
 local stage = {}
 
 stage.warnings = {
-    ["800"] = {message_format = "function {name} has too many arguments ", fields = {'name'}},
-    ["801"] = {message_format = "function {name} is too big: takes {lineCount} lines ", fields = {'name',"lineCount"}},
+    ["800"] = {message_format = "函数 {name} 参数太多了", fields = {'name'}},
+    ["801"] = {message_format = "函数 {name} 行数太多: 总共 {lineCount} 行 ", fields = {'name',"lineCount"}},
 }
 local max_function_argument_count = 4
 local max_function_line_count = 80
