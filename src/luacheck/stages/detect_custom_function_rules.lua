@@ -16,7 +16,6 @@ local function check_argument_naming(node,chstate)
             local argName = arg[1]
             local nameLen=string.len(argName)
             if argName and  nameLen>0 then
-                print(" ",argName)
                 local firstCh =string.sub(argName,1,1)
                 if firstCh=="_" and nameLen>1  then
                     firstCh =string.sub(argName,2,2)
