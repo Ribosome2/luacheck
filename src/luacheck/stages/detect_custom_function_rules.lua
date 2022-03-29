@@ -4,13 +4,35 @@ local stage = {}
 stage.warnings = {
     ["800"] = {message_format = "函数 {name} 参数太多了", fields = {'name'}},
     ["801"] = {message_format = "函数 {name} 行数太多: 总共 {lineCount} 行 ", fields = {'name',"lineCount"}},
+    ["802"] = {message_format = "参数 {name} 应该从以小写开头 ", fields = {'name'}},
 }
 local max_function_argument_count = 4
 local max_function_line_count = 80
 
+local function check_argument_naming(node,chstate)
+    local args = node[1]
+    if args then
+        for i, arg in pairs(args) do
+            local argName = arg[1]
+            local nameLen=string.len(argName)
+            if argName and  nameLen>0 then
+                print(" ",argName)
+                local firstCh =string.sub(argName,1,1)
+                if firstCh=="_" and nameLen>1  then
+                    firstCh =string.sub(argName,2,2)
+                end
+                if firstCh>="A" and firstCh<="Z" then
+                    chstate:warn_range("802",node,{name=argName})
+                end
+            end
+        end
+    end
+end
+
 
 local function  check_single_function(node,chstate)
     local args = node[1]
+    check_argument_naming(node,chstate)
     if #args> max_function_argument_count then
         chstate:warn_range("800",node,{name=node.name})
     end
