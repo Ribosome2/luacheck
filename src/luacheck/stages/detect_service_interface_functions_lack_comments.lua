@@ -7,6 +7,16 @@ stage.warnings = {
     ["812"] = {message_format = "Service 的Mgr 公开函数 {name} 必须要有注释", fields = {'name'}},
 }
 
+local function begins_with(str,target_str)
+    if string.len(str)>=string.len(target_str) then
+        local subStr = string.sub(str,0,string.len(target_str))
+        if subStr==target_str then
+            return true
+        end
+    end
+    return false
+end
+
 local function find_prev_comment_line(start_line,chstate)
     local result =-1
     --只认紧跟函数名的上一行的注释
@@ -24,8 +34,17 @@ end
 local function  check_single_function(node,chstate,isMgr)
     local cleanFunctionName = node.name:match("[^.:]+$")
     local func_begin_line = node.line
+    local firstCh =string.sub(cleanFunctionName,1,1)
+    if firstCh=="_" then
+        -- '_'开始的认为是非公开函数
+        return
+    end
     if find_prev_comment_line(func_begin_line,chstate)<=0 then
         if isMgr then
+            if begins_with(cleanFunctionName,"Get")
+                    or begins_with(cleanFunctionName,"Set") then
+                return
+            end
             chstate:warn_range("812",node,{name=cleanFunctionName})
         else
             chstate:warn_range("811",node,{name=cleanFunctionName})
