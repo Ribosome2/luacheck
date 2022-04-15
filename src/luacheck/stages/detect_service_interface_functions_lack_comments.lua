@@ -88,16 +88,16 @@ function stage.run(chstate)
     if curFilePath ~=nil then
         if ends_with(curFilePath,"Service.lua") then
             handle_nodes(chstate.ast,chstate)
-        elseif  ends_with(curFilePath,SERVICE_MGR_SUFFIX) then
-            local moduleName = get_module_name(chstate.source._bytes)
-            if moduleName ~=nil then
-                local name_with_extension = curFilePath:match('[^\\]+$')
-                local serviceMgrName = moduleName..SERVICE_MGR_SUFFIX
-                if  name_with_extension ==serviceMgrName then
-                    --print("found service Mgr ",moduleName,name_without_extension)
-                    handle_nodes(chstate.ast,chstate,true)
-                end
-            end
+        --elseif  ends_with(curFilePath,SERVICE_MGR_SUFFIX) then
+        --    local moduleName = get_module_name(chstate.source._bytes)
+        --    if moduleName ~=nil then
+        --        local name_with_extension = curFilePath:match('[^\\]+$')
+        --        local serviceMgrName = moduleName..SERVICE_MGR_SUFFIX
+        --        if  name_with_extension ==serviceMgrName then
+        --            --print("found service Mgr ",moduleName,name_without_extension)
+        --            handle_nodes(chstate.ast,chstate,true)
+        --        end
+        --    end
         end
     end
 
