@@ -5,6 +5,7 @@ local stage = {}
 stage.warnings = {
     ["811"] = {message_format = "Service 公开函数 {name} 必须要有注释 ", fields = {'name'}},
     ["812"] = {message_format = "Service 的Mgr 公开函数 {name} 必须要有注释", fields = {'name'}},
+    ["813"] = {message_format = "Service 函数{name}只应提供对外接口，不能有具体逻辑(逻辑内容理论上只能一行）", fields = {'name'}},
 }
 
 local function begins_with(str,target_str)
@@ -31,6 +32,39 @@ local function find_prev_comment_line(start_line,chstate)
     return result
 end
 
+local function count_code_lines_in_function(node,chstate)
+    local rawLineCount = node.end_line - node.line
+    local count =0
+    if rawLineCount>1 then
+        --只计算函数内容的行，不算function 和 end
+        local start_line = node.line +1
+        local end_line = node.end_line-1
+        for line_index = start_line, end_line do
+            if chstate.code_lines[line_index]==true then
+                --print("add line count",line_index)
+                count = count+1
+            end
+        end
+    end
+    return count
+end
+
+--Service只提供对外接口，理论上不能超过一行
+local function  check_service_function_line_count(node,chstate)
+    local MAX_LINE_COUNT_FOR_SERVICE_FUNCTION =1
+    if node.end_line and node.line then
+        local lineCount = count_code_lines_in_function(node,chstate)
+        --print("function  line count ",node.name,lineCount)
+        if lineCount> MAX_LINE_COUNT_FOR_SERVICE_FUNCTION then
+            chstate:warn_range("813",node,{
+                name=node.name,
+            })
+        end
+    end
+end
+
+
+
 local function  check_single_function(node,chstate,isMgr)
     local cleanFunctionName = node.name:match("[^.:]+$")
     local func_begin_line = node.line
@@ -38,6 +72,10 @@ local function  check_single_function(node,chstate,isMgr)
     if firstCh=="_" then
         -- '_'开始的认为是非公开函数
         return
+    end
+
+    if isMgr~=true then
+        check_service_function_line_count(node,chstate)
     end
     if find_prev_comment_line(func_begin_line,chstate)<=0 then
         if isMgr then

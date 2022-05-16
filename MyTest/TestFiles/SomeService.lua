@@ -7,7 +7,10 @@ function SomeService.OnLogin()
 end
 
 function func2()
+    local sss =1
+    --this is comment
 
+    local eeee=112
 end
 
 
