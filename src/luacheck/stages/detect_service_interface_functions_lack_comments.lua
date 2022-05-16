@@ -5,7 +5,7 @@ local stage = {}
 stage.warnings = {
     ["811"] = {message_format = "Service 公开函数 {name} 必须要有注释 ", fields = {'name'}},
     ["812"] = {message_format = "Service 的Mgr 公开函数 {name} 必须要有注释", fields = {'name'}},
-    ["813"] = {message_format = "Service 函数{name}只应提供对外接口，不能有具体逻辑(逻辑内容理论上只能一行）", fields = {'name'}},
+    ["813"] = {message_format = "Service 函数 {name} 只应提供对外接口，不能有具体逻辑(逻辑内容理论上只能一行）", fields = {'name'}},
 }
 
 local function begins_with(str,target_str)
@@ -56,8 +56,9 @@ local function  check_service_function_line_count(node,chstate)
         local lineCount = count_code_lines_in_function(node,chstate)
         --print("function  line count ",node.name,lineCount)
         if lineCount> MAX_LINE_COUNT_FOR_SERVICE_FUNCTION then
+            local cleanFunctionName = node.name:match("[^.:]+$")
             chstate:warn_range("813",node,{
-                name=node.name,
+                name=cleanFunctionName,
             })
         end
     end
