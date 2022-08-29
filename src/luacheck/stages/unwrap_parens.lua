@@ -70,6 +70,11 @@ local function handle_nodes(nodes, list_start)
 
             -- warn that not (x == y) can become x ~= y
             if tag == "Op" and node[1] == "not" and node[2].tag == "Op" and relational_operators[node[2][1]] then
+                if chstate==nil then
+                    --print("go ")
+                    --todo: somehow chstate might become nil when run with exe ,fix later
+                    return
+                end
                chstate:warn_range("581", node, {
                   operator = relational_operators[node[2][1]],
                   replacement_operator = replacements[node[2][1]]
