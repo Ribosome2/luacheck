@@ -349,6 +349,10 @@ if utils.is_instance(err, utils.InvalidPatternError) then
 elseif type(err) == "string" and err:find("interrupted!$") then
    critical("Interrupted")
 else
+    if type(err)=="table" then
+        --如果err是table的时候，下面的string.format会报错
+        err=tostring(err)
+    end
    local msg = ("Luacheck %s bug (please report at https://github.com/lunarmodules/luacheck/issues):\n%s\n%s"):format(
       luacheck._VERSION, err, traceback)
    critical(msg)
