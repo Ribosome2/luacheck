@@ -704,7 +704,6 @@ function stage.run(chstate)
    for _, nested_line in ipairs(chstate.top_line.lines) do
       table.insert(chstate.lines, nested_line)
    end
-    print("-------- ",GetVarDump(chstate))
 end
 
 return stage

@@ -71,5 +71,36 @@ end
 
 function stage.run(chstate)
     handle_nodes(chstate.ast,chstate)
+
+    for _, line in ipairs(chstate.lines) do
+        if line.node then
+            print("line----------------",line.node[1][1][1])
+            if  line.node[1] and  line.node[1][1][1]=='self' then
+                --chstate.node[1]
+                print("memberFunctionLine ",line.node[2][1].line)
+            end
+        end
+
+        if next(line.set_upvalues) then
+            --print("set upvalue ",line.set_upvalues[1].lhs)
+            --print("set upvalue ",line.set_upvalues.lhs[1].var.name)
+            for i, set_upvalues in pairs(line.set_upvalues) do
+                print("set upvalue--- ",set_upvalues[1].lhs[1].var.name)
+                print("set upvalue line  ",GetVarDump(line))
+            end
+            --print("chstate--------- ",GetVarDump(line.set_upvalues))
+        end
+
+        if next(line.mutated_upvalues) then
+            --print("set upvalue ",line.set_upvalues[1].lhs)
+            --print("set upvalue ",line.set_upvalues.lhs[1].var.name)
+            for i, mutated_upvalues in pairs(line.mutated_upvalues) do
+                print("mutated_upvalues--- ",GetVarDump(mutated_upvalues))
+                print("mutated_upvalues--- ",mutated_upvalues[1].lhs[1])
+                print("mutated_upvalues line --- ",GetVarDump(line))
+            end
+            --print("chstate--------- ",GetVarDump(line.set_upvalues))
+        end
+    end
 end
 return stage
