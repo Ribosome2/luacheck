@@ -1,7 +1,7 @@
 
 local stage = {}
 local checkFunctionNames ={
-    ["printError"]="请注意一下是不是应该留在线上去,因为会增加报错率"
+    ["printError"]="请注意一下是不是应该留到线上,因为会增加报错率"
 }
 --检测一些特别的函数调用
 stage.warnings = {
@@ -18,7 +18,7 @@ function stage.run(chstate)
         for _, line_item in pairs(v.items) do
             if type(line_item)=="table" then
                 if line_item.node and line_item.node.tag =="Call" then
-                    print("calll----------- ",GetVarDump(line_item.node))
+                    --print("calll----------- ",GetVarDump(line_item.node))
                     local callFuncName = line_item.node[1][1]
                     if checkFunctionNames[callFuncName]~=nil then
                         chstate:warn_range("1001",line_item.node,{

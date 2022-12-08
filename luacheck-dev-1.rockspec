@@ -60,6 +60,7 @@ build = {
       ["luacheck.stages.detect_service_interface_functions_lack_comments"] = "src/luacheck/stages/detect_service_interface_functions_lack_comments.lua",
       ["luacheck.stages.detect_code_content_line_count"] = "src/luacheck/stages/detect_code_content_line_count.lua",
       ["luacheck.stages.detect_special_function_call"] = "src/luacheck/stages/detect_special_function_call.lua",
+      ["luacheck.stages.detect_nologic_files"] = "src/luacheck/stages/detect_nologic_files.lua",
       ["luacheck.stages.linearize"] = "src/luacheck/stages/linearize.lua",
       ["luacheck.stages.name_functions"] = "src/luacheck/stages/name_functions.lua",
       ["luacheck.stages.parse"] = "src/luacheck/stages/parse.lua",

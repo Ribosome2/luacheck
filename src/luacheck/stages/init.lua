@@ -29,7 +29,8 @@ stages.names = {
    "detect_custom_function_rules",
    "detect_service_interface_functions_lack_comments",
    "detect_code_content_line_count",
-   "detect_special_function_call"
+   "detect_special_function_call",
+   "detect_nologic_files"
 }
 
 stages.modules = {}
