@@ -7,3 +7,7 @@ ignore = {
     "811/OnLogin",
     "812/OnLogin",
 }
+
+custom_check_options={
+    check_special_function_calls=false
+}

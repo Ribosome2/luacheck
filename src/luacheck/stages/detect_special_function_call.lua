@@ -13,6 +13,9 @@ stage.warnings = {
 
 function stage.run(chstate)
     --print("----------------- ",GetVarDump(chstate))
+    if GLOBAL_STAGES_CHECK_OPTIONS.check_special_function_calls~=true then
+        return
+    end
 
     for i, v in pairs(chstate.lines) do
         for _, line_item in pairs(v.items) do

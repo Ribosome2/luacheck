@@ -22,6 +22,21 @@ local config_options = {
    default_config = utils.has_type_or_false("string")
 }
 
+GLOBAL_STAGES_CHECK_OPTIONS={
+    check_special_function_calls = true,
+}
+
+
+local function parse_override_config(base_configs)
+    if base_configs then
+        for i, v in pairs(base_configs) do
+            if v.custom_check_options then
+                GLOBAL_STAGES_CHECK_OPTIONS.check_special_function_calls = v.custom_check_options.check_special_function_calls~=false
+            end
+        end
+    end
+end
+
 function runner.new(opts)
    local ok, err = options.validate(config_options, opts)
 
@@ -39,7 +54,7 @@ function runner.new(opts)
 
    local config_stack
    config_stack, err = config.stack_configs({base_config, override_config})
-
+   parse_override_config(base_config)
    if not config_stack then
       return nil, err
    end
