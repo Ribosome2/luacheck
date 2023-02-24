@@ -22,9 +22,6 @@ local config_options = {
    default_config = utils.has_type_or_false("string")
 }
 
-GLOBAL_STAGES_CHECK_OPTIONS={
-    check_special_function_calls = true,
-}
 
 
 local function parse_override_config(base_configs)

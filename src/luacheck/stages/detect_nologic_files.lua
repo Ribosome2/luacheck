@@ -32,7 +32,9 @@ local function is_any_code_lines_in_function(node,chstate)
     return false
 end
 
-
+local function ends_with(str, ending)
+    return ending == "" or str:sub(-#ending) == ending
+end
 local function  check_single_function(node,chstate,resultTable)
    resultTable.hasFunction =true
    resultTable.warnNode =node
@@ -43,7 +45,8 @@ local function  check_single_function(node,chstate,resultTable)
     --    name=cleanFunctionName,
     --})
     --特殊函数里面会生成一些骨架，没法判断是否有用，全部忽略
-    if ignoreFunctionNames[cleanFunctionName]==nil then
+    if (cleanFunctionName=="Init" and ends_with(CUR_CHECK_FILE_PATH,"ViewModel.lua") or
+            (  ignoreFunctionNames[cleanFunctionName]==nil)) then
         if resultTable.isAllFunctionEmpty then
             if node.end_line and node.line then
                 if  is_any_code_lines_in_function(node,chstate) then

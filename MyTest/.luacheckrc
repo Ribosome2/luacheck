@@ -9,5 +9,5 @@ ignore = {
 }
 
 custom_check_options={
-    check_special_function_calls=false
+    --check_special_function_calls=false
 }

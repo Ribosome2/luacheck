@@ -32,6 +32,9 @@ stages.names = {
    "detect_special_function_call",
    "detect_nologic_files"
 }
+GLOBAL_STAGES_CHECK_OPTIONS={
+    check_special_function_calls = true,
+}
 
 stages.modules = {}
 

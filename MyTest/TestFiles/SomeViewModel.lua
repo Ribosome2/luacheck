@@ -5,6 +5,10 @@ function dddddd()
     
 end
 
+
+function SomeMgr:Init()
+    local ss =11
+end
 function SomeMgr:OnLogin()
 
 end
