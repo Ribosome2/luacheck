@@ -38,20 +38,21 @@ end
 local function  check_single_function(node,chstate,resultTable)
    resultTable.hasFunction =true
    resultTable.warnNode =node
-
-    --print(curFilePath,"好像是没有用的文件")
-    local cleanFunctionName = node.name:match("[^.:]+$")
-    --chstate:warn_range("814",warnNode,{
-    --    name=cleanFunctionName,
-    --})
-    --特殊函数里面会生成一些骨架，没法判断是否有用，全部忽略
-    if (cleanFunctionName=="Init" and ends_with(CUR_CHECK_FILE_PATH,"ViewModel.lua") or
-            (  ignoreFunctionNames[cleanFunctionName]==nil)) then
-        if resultTable.isAllFunctionEmpty then
-            if node.end_line and node.line then
-                if  is_any_code_lines_in_function(node,chstate) then
-                    --print("found function  ",cleanFunctionName)
-                    resultTable.isAllFunctionEmpty= false
+    if node.name~=nil then
+        --print(curFilePath,"好像是没有用的文件")
+        local cleanFunctionName = node.name:match("[^.:]+$")
+        --chstate:warn_range("814",warnNode,{
+        --    name=cleanFunctionName,
+        --})
+        --特殊函数里面会生成一些骨架，没法判断是否有用，全部忽略
+        if (cleanFunctionName=="Init" and ends_with(CUR_CHECK_FILE_PATH,"ViewModel.lua") or
+                (  ignoreFunctionNames[cleanFunctionName]==nil)) then
+            if resultTable.isAllFunctionEmpty then
+                if node.end_line and node.line then
+                    if  is_any_code_lines_in_function(node,chstate) then
+                        --print("found function  ",cleanFunctionName)
+                        resultTable.isAllFunctionEmpty= false
+                    end
                 end
             end
         end
