@@ -5,6 +5,7 @@ local multithreading = {}
 local lanes_ok, lanes = pcall(require, "lanes")
 lanes_ok = lanes_ok and pcall(lanes.configure)
 multithreading.has_lanes = lanes_ok
+multithreading.has_lanes = false -- 多线程会有很多奇怪的问题，暂时先不用
 multithreading.lanes = lanes
 multithreading.default_jobs = 1
 

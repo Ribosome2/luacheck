@@ -67,6 +67,9 @@ end
 
 
 local function  check_single_function(node,chstate,isMgr)
+    if node.name==nil then
+        return
+    end
     local cleanFunctionName = node.name:match("[^.:]+$")
     local func_begin_line = node.line
     local firstCh =string.sub(cleanFunctionName,1,1)
