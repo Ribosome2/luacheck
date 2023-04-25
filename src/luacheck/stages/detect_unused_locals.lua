@@ -76,7 +76,34 @@ local function warn_unused_var(chstate, value, is_useless)
    })
 end
 
+local function check_first_var_is_default(var)
+    if var ~=nil and var.values ~=nil then
+        if var.values[1] and #var.values==2 and var.values[1].overwriting_item then
+            local firstValue = var.values[1].node[1]
+            if firstValue ==nil then
+                --print("----overriding nil item ")
+                return true
+            end
+            if firstValue =="nil" then
+                --print("----overriding nil item ",firstValue.tag)
+                return true
+            end
+
+            if firstValue =="" then
+                --print("----overriding empty string  item ",firstValue.tag)
+                return true
+            end
+        end
+    end
+    return false
+end
+
 local function warn_unaccessed_var(chstate, var, is_mutated)
+    if var ~=nil and var.values ~=nil then
+        if check_first_var_is_default(var) then
+            return
+        end
+    end
    -- Mark as secondary if all assigned values are secondary.
    -- It is guaranteed that there are at least two values.
    local secondary = true
